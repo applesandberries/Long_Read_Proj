@@ -1,0 +1,182 @@
+---
+title: "Comp383_softcode"
+output: pdf_document
+date: "2024-03-26"
+---
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r setup, include=FALSE}
+library(readr)
+
+file_paths <- c(
+  "/Users/leahboger/Desktop/Lparagasseri_ANI/4892_3209_4_ANI.tsv",
+  # add more file paths
+)
+
+# read data and extract specific column for each
+data_list <- lapply(file_paths, function(file) {
+  data <- readr::read_tsv(file, col_names = FALSE)
+  data <- data.frame(data)
+  data[, 3]  # extracting the third column
+})
+
+# combine data into a single vector
+y <- unlist(data_list)
+
+# create strain labels
+strain <- rep(paste0("lparagasseri", seq_along(data_list)), each = length(data_list[[1]]))
+```
+
+
+```{r}
+# linear regression
+l <- lm(y ~ strain)
+
+# ANOVA
+anova_result <- anova(l)
+
+# Shapiro-Wilk test for normality
+shapiro_test <- shapiro.test(l$residuals)
+
+# Bartlett's test for homogeneity of variances
+bartlett_test <- bartlett.test(l$resid, strain)
+
+# Kruskal-Wallis test
+kruskal_test <- kruskal.test(y ~ strain)
+
+# results
+print(anova_result)
+print(shapiro_test)
+print(bartlett_test)
+print(kruskal_test)
+
+```
+
+
+```{r}
+TukeyHSD(aov(y~strain), conf.level=0.95)
+library(agricolae)
+an.m<-aov(y~strain)
+l<- LSD.test(an.m,"strain",p.adj = "bonferroni")
+l
+
+```
+
+
+```{r}
+all<-y #compiling all the ANI values together      (why make new variable)
+boot<-sample(all,size=10000,replace = TRUE) #bootstrap
+d<-density(boot) #kernel density estimation
+library(ggplot2)
+library(dplyr)
+df<-data.frame(boot)
+
+```
+
+
+```{r}
+library(tidyverse)
+testANI <- read.table(pipe("pbpaste"), sep="\t", header = TRUE)
+
+testANI$strain_loc1 <- paste(testANI$X, testANI$X.1)
+
+# columns we want to select
+selected_columns <- c("strain_loc1", "X3329_50", #add more
+                      )
+
+# select specific columns
+testANI <- testANI %>% select(all_of(selected_columns))
+
+columns = paste(names(testANI),as.matrix(testANI[1,]))
+colnames(testANI) = columns
+
+testANI <- testANI[-1, ]
+colnames(testANI)[1] ="strain_loc1"
+
+testANI <- testANI %>% pivot_longer(-strain_loc1, names_to = "strain_loc2", values_to = "ANI")
+
+# convert ANI to numeric
+testANI$ANI <- as.numeric(testANI$ANI)
+
+# calculate empirical p-values
+emp<-rep(0,nrow(testANI))
+for(i in 1:nrow(testANI))
+  {emp[i]<-pemp(testANI$ANI[i],boot, prob.method = "emp.probs")}
+t<-cbind(testANI,emp)
+
+output_file <- "/Users/leahboger/Desktop/LactoANI_output/Lparagasseri_emp.xlsx"
+
+library(writexl)
+write_xlsx(t, output_file)
+
+
+library(ggbreak)
+library(ggplot2)
+library(hrbrthemes)
+
+
+blue_vline <- 99.9976
+blue_vline_label <- "3329_51 LP2 vs 513_32 LP2"
+red_vline <- 98.4495
+red_vline_label <- "3329_50 LP1 vs 3329_51 LP2"
+plot_title <- "Density plot of ANI values for Lparagasseri"
+x_label <- "ANI values (bootstrapped)"
+y_label <- "Density"
+
+p <- df %>% 
+  ggplot(aes(x = boot)) + 
+  geom_density(fill = "darksalmon", color = "#e9ecef") +
+  geom_vline(xintercept = blue_vline, color = "blue", linewidth = 1) +
+  annotate("text", x = blue_vline - 0.3, y = 2.1, label = blue_vline_label, color = "darkblue") +
+  geom_vline(xintercept = red_vline, color = "red", linewidth = 1) +
+  annotate("text", x = red_vline + 0.3, y = 2.65, label = red_vline_label, color = "darkred") +
+  ggtitle(plot_title) + 
+  xlab(x_label) +
+  ylab(y_label)
+
+```
+
+```{r}
+t <- read.csv("/Users/leahboger/Desktop/Lparagasseri_emp.csv") %>% select(strain_loc1, strain_loc2, ANI, emp)
+library(ggbreak)
+library(plotrix)
+library(RColorBrewer)
+brewer.pal(n = 6, name = "Dark2")
+cols <- c("LP1"="#1B9E77","LP2"="#D95F02","LP3"="#7570B3", "LP4"="#E7298A","LP5"="#66A61E", "LP6"="#E6AB02")
+
+g <- df %>% ggplot(aes(x= boot)) + geom_density(fill = "darkgrey", color = "black")+
+  geom_vline(aes(xintercept = 99.9992, color = "LP3"), linewidth = 1)+
+  geom_vline(aes(xintercept = 99.9989, color = "LP2"), linewidth = 1)+
+  geom_vline(aes(xintercept = 99.9985, color = "LP2"), linewidth = 1)+
+  geom_vline(aes(xintercept = 99.9985, color = "LP2"), linewidth = 1)+
+  geom_vline(aes(xintercept = 99.9984, color = "LP2"), linewidth = 1)+
+  geom_vline(aes(xintercept = 99.9984, color = "LP2"), linewidth = 1)+
+  geom_vline(aes(xintercept = 99.9983, color = "LP2"), linewidth = 1)+
+  geom_vline(aes(xintercept = 99.9983, color = "LP2"), linewidth = 1)+
+  geom_vline(aes(xintercept = 99.9981, color = "LP2"), linewidth = 1)+
+  geom_vline(aes(xintercept = 99.9981, color = "LP2"), linewidth = 1)+
+  geom_vline(aes(xintercept = 99.9981, color = "LP2"), linewidth = 1)+
+  geom_vline(aes(xintercept = 99.9979, color = "LP1"), linewidth = 1)+
+  geom_vline(aes(xintercept = 99.9976, color = "LP2"), linewidth = 1)+
+  geom_vline(aes(xintercept = 99.9976, color = "LP2"), linewidth = 1)+
+  geom_vline(aes(xintercept = 99.9976, color = "LP2"), linewidth = 1)+
+  geom_vline(aes(xintercept = 99.9974, color = "LP1"), linewidth = 1)+
+  geom_vline(aes(xintercept = 99.9973, color = "LP2"), linewidth = 1)+
+  geom_vline(aes(xintercept = 99.9972, color = "LP4"), linewidth = 1)+
+  geom_vline(aes(xintercept = 99.9970, color = "LP2"), linewidth = 1)+
+  geom_vline(aes(xintercept = 99.9946, color = "LP1"), linewidth = 1)+
+  geom_vline(aes(xintercept = 99.9912, color = "LP6"), linewidth = 1)+
+  geom_vline(aes(xintercept = 98.1906, color = "LP5"), linewidth = 1)+
+  geom_vline(aes(xintercept = 98.4349, color = "LP3"), linewidth = 1)+
+  geom_vline(aes(xintercept = 98.4588, color = "LP3"), linewidth = 1)+
+  ggtitle("Density plot of ANI values for Lparagasseri") + xlab("ANI values(bootstrapped)")+ ylab("Density")+
+  scale_color_manual(name = "Patients", values = cols)
+
+g + theme_bw()
+```
+
+

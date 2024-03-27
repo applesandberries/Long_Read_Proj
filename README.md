@@ -12,6 +12,7 @@ Currently, there is no definitive way to prove two strain are identical and no u
 
 * Python
 * R + packages: ggplot2, agricolae, dplyr
+* Conda
 * minimap2 - https://lh3.github.io/minimap2
 * miniasm - https://github.com/lh3/miniasm
 * ANI calculator

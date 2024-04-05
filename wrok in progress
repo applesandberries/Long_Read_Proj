@@ -6,3 +6,22 @@ minimap2 -x ava-ont ERR3284704_GridION_sequencing.fastq ERR3284704_GridION_seque
 
 
 miniasm -f ERR3284704_GridION_sequencing.fastq minimap.paf.gz > miniasm.gfa
+
+
+
+import subprocess
+import random
+import os
+file1='/home/happleberry/ERR3284704_GridION_sequencing.fastq'
+result = subprocess.run(['wc', '-l', file1], capture_output=True, text=True)
+line_count = int(result.stdout.split()[0])
+
+number_reads = line_count // 4
+random.seed(1)
+randomList=random.sample(range(0,number_reads),50)
+
+counter=1
+for i in randomList:
+        command='/home/happleberry/seqtk/seqtk sample -s'+str(i)+' '+file1+' 150000 > '+'  /home/happleberry/sub/'+ str(counter)+''
+        counter+=1
+        os.system(command)

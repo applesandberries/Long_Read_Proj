@@ -1,0 +1,2 @@
+curl -L ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR328/004/ERR3284704/ERR3284704.fastq.gz -o ERR3284704_GridION_sequencing.fastq.gz
+

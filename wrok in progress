@@ -1,2 +1,8 @@
 curl -L ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR328/004/ERR3284704/ERR3284704.fastq.gz -o ERR3284704_GridION_sequencing.fastq.gz
 
+
+
+minimap2 -x ava-ont ERR3284704_GridION_sequencing.fastq ERR3284704_GridION_sequencing.fastq | gzip -1 > minimap.paf.gz
+
+
+miniasm -f ERR3284704_GridION_sequencing.fastq minimap.paf.gz > miniasm.gfa

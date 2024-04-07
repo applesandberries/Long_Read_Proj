@@ -1,0 +1,48 @@
+# assemble subset and compare - work in progress
+
+# need to install Canu - easiest to install binary release, package installer not encouraged
+# use conda or homebrew if necessary
+
+# need to install fastANI
+# must install the FastANI binaries yourself for this package to work
+pip install fastani
+
+# subset assembly with Canu
+# need to specify the -nanopore-raw option since Canu is designed for nanopore data
+# need to adjust the genomeSize parameter based on our estimated genome size
+canu -p subset -d /home/happleberry/assembly_subset genomeSize=5m -nanopore-raw /home/happleberry/subset.fastq
+
+# assembly comparison with fastANI - does not require an alignment step
+# will calculate the ANI between the contigs in contigs.fasta from the subset assembly
+# and the contigs from miniasm.gfa of the full assembly
+# need to adjust the --fragLen and  --minFrag parameters
+# repeat runs of fastANI with different parameters to assess robustness
+fastANI --ql /home/happleberry/assembly_subset/contigs.fasta --rl /home/happleberry/miniasm.gfa --fragLen 1000 --minFrag 1000
+
+# ANI visualization via histogram and scatter plot for validation
+import matplotlib.pyplot as plt
+
+# ANI values (use our actual data)
+ani_values = []
+
+# Scatter plot
+# dashed red line is the perfect match 100% ANI
+plt.figure(figsize=(8, 6))
+plt.scatter(range(len(ani_values)), ani_values)
+plt.axhline(y=100, color='r', linestyle='--', label='Perfect Match (100%)')
+plt.xlabel('Genome Pairs')
+plt.ylabel('ANI (%)')
+plt.title('ANI Values for Genome Comparison')
+plt.legend()
+plt.show()
+
+# Histogram
+plt.figure(figsize=(8, 6))
+plt.hist(ani_values, bins=10, color='skyblue', edgecolor='black')
+plt.axvline(x=100, color='r', linestyle='--', label='Perfect Match (100%)')
+plt.xlabel('ANI (%)')
+plt.ylabel('Frequency')
+plt.title('Distribution of ANI Values')
+plt.legend()
+plt.show()
+

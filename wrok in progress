@@ -25,3 +25,4 @@ for i in randomList:
         command='/home/happleberry/seqtk/seqtk sample -s'+str(i)+' '+file1+' 150000 > '+'  /home/happleberry/sub/'+ str(counter)+''
         counter+=1
         os.system(command)
+Sub Files can be found in folder called Long_Read_Proj

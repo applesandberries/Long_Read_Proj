@@ -26,3 +26,4 @@ for i in randomList:
         counter+=1
         os.system(command)
 Sub Files can be found in folder called Long_Read_Proj
+Sub Files can be found in folder called Long_Read_Proj

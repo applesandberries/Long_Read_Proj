@@ -15,6 +15,7 @@ Currently, there is no definitive way to prove two strain are identical and no u
 * Conda
 * minimap2 - https://lh3.github.io/minimap2
 * miniasm - https://github.com/lh3/miniasm
+* Canu - see https://github.com/marbl/canu/releases downloading binary is recommended, can use homebrew or conda if necessary
 * ANI calculator
 
 ### Installing

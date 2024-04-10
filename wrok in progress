@@ -1,10 +1,29 @@
 curl -L ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR328/004/ERR3284704/ERR3284704.fastq.gz -o ERR3284704_GridION_sequencing.fastq.gz
+import argparse
+#part of the argparse code. obviously requires argpviarse
+import sys
+#requires sys
+#function to parse command line arguments
 
+def check_arg(args=None):
+	parser = argparse.ArgumentParser(description='Reading in a Fasta File and Translating')
+	parser.add_argument('-i', '--input', help='path to input files', required='True')
+	parser.add_argument('-o', '--output', help='output file names', required='True')
+	return parser.parse_args(args)
+args = check_arg(sys.argv[1:])
+infile = args.input
+outfile = args.output
+x=glob.glob(infile+"*")
+list_of_fastq_prefixes=set()
+for i in x:
+        p=i[len(infile):i.find('.fastq')]
+        list_of_fastq_prefixes.add(p)
+for i in list_of_fastq_prefixes:
+        command= 'minimap2 -x ava-ont '+i+'.fastq '+i+'.fastq | gzip -1 > '+i+'minimap.paf.gz'
+#minimap2 -x ava-ont ERR3284704_GridION_sequencing.fastq ERR3284704_GridION_sequencing.fastq | gzip -1 > minimap.paf.gz
 
-
-minimap2 -x ava-ont ERR3284704_GridION_sequencing.fastq ERR3284704_GridION_sequencing.fastq | gzip -1 > minimap.paf.gz
-
-
+for i in list_of_fastq_prefixes:
+        command= 'mimiasn -f '+i+'.fastq '+i+'minimap.paf.gz > '
 miniasm -f ERR3284704_GridION_sequencing.fastq minimap.paf.gz > miniasm.gfa
 
 

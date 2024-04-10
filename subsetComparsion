@@ -8,8 +8,8 @@
 # pip install fastani
 
 # subset assembly with Canu
-# need to specify the -nanopore-raw option since Canu is designed for nanopore data
-# need to adjust the genomeSize parameter based on our estimated genome size
+# need to get rid of the -nanopore-raw option since Canu is designed for nanopore data not raw
+# keep default genpme size
 import argparse
 import subprocess
 import matplotlib.pyplot as plt
@@ -28,7 +28,7 @@ if __name__ == "__main__":
         '-p', args.prefix,
         '-d', args.output_dir,
         f'genomeSize={args.genome_size}',
-        '-nanopore-raw', args.input_fastq
+        '-nanopore-raw', args.input_fastq  #remove raw nano
     ]
     subprocess.run(canu_cmd)
 

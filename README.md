@@ -10,7 +10,7 @@ Currently, there is no definitive way to prove two strain are identical and no u
 
 ### Dependencies
 
-* Python
+* Python + packages: matplotlib
 * R + packages: ggplot2, agricolae, dplyr
 * Conda
 * minimap2 - https://lh3.github.io/minimap2

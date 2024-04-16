@@ -16,7 +16,7 @@ Currently, there is no definitive way to prove two strain are identical and no u
 * minimap2 - https://lh3.github.io/minimap2
 * miniasm - https://github.com/lh3/miniasm
 * ANI calculator
-
+* Seqtk (please install via (conda install seqtk) rather than github or install through github but be sure to add seqtk to main path to be used as a command without providing path))
 ### Installing
 
 * How/where to download program

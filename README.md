@@ -10,14 +10,12 @@ Currently, there is no definitive way to prove two strain are identical and no u
 
 ### Dependencies
 
-* Python + packages: matplotlib
+* Python + packages: matplotlib, Biopython.SeqIO
 * R + packages: ggplot2, agricolae, dplyr
 * Conda
 * minimap2 - https://lh3.github.io/minimap2
 * miniasm - https://github.com/lh3/miniasm
-* Canu - see https://github.com/marbl/canu/releases downloading binary is recommended, can use homebrew or conda if necessary
-* ANI calculator
-* fastANI - use pip install fastani
+* fastANI - https://github.com/ParBLiSS/FastANI easiest install using dependency-free binary for Linux or OSx from FastANI v1.34 release
 
 ### Installing
 

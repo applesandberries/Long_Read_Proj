@@ -11,7 +11,7 @@ Currently, there is no definitive way to prove two strain are identical and no u
 ### Dependencies
 
 * Python + packages: matplotlib
-* R + packages: ggplot2, agricolae, dplyr
+* R + packages: ggplot, dplyr, agricolae, tidyverse, writex1, ggbreak, hrbrthemes, plotrix, RColorBrewer, empirical
 * Conda
 * minimap2 - https://lh3.github.io/minimap2
 * miniasm - https://github.com/lh3/miniasm
@@ -38,3 +38,5 @@ Alexa Ligon<br>
 Hailey Bieneman<br>
 
 ## Acknowledgments
+
+Special thanks to Dr. Putonti and Dr. Banerjee for allowing us to work on this project, giving advice on the project, and providing valuable resources. 

@@ -1,6 +1,6 @@
 # Long read project
 
-Our main goal is to develop a pipeline that allows comparison between long read sequences from any bacteria for strain identification.
+Our main goal is to develop a pipeline that allows comparison between long read sequences from any bacteria for strain identification using average nucleotide identity.
 
 ## Description
 
@@ -10,7 +10,7 @@ Currently, there is no definitive way to prove two strain are identical and no u
 
 ### Dependencies
 
-* Python + packages: matplotlib, Biopython.SeqIO
+* Python + packages: 
 * R + packages: ggplot2, agricolae, dplyr
 * Conda
 * minimap2 - https://lh3.github.io/minimap2

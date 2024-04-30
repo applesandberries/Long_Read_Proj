@@ -1,0 +1,105 @@
+---
+title: "Sub_Full Stats"
+output: html_document
+date: "2024-04-22"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(readr)
+
+# read the single TSV file
+sub_full <- readr::read_tsv("~/Downloads/sub_full_ANI.txt", col_names = FALSE)
+sub_fullANI <- data.frame(sub_full)
+sub_fullANI <- sub_fullANI[,3]
+length(sub_fullANI)
+
+```
+```{r}
+# fit a linear model
+l <- lm(sub_fullANI ~ 1)  # '1' means no predictor variables, just the intercept
+
+# perform ANOVA
+anova(l)
+#low p-value (< 2.2e-16), reject null hypothesis -- (null is there is not sig strain difference)
+
+# check the normality of residuals
+shapiro.test(l$residuals)
+#low p-val(9.893e-15), reject null (null is that the residuals follow a normal distribution)
+
+# check the homogeneity of variances
+# bartlett.test(l_single$resid, rep(1, length(lparagasseri_singleANI)))  # (1 represents the single strain)
+
+# use nonparametric ANOVA, aka kruskal.test
+#kruskal.test(sub_fullANI, rep(1, length(sub_fullANI)))
+#small p-val(< 2.2e-16), so appears to be significant difference between strains
+# change this ^
+
+```
+
+```{r}
+# Tukey's HSD
+# TukeyHSD(aov(sub_fullANI ~ 1), conf.level=0.95)
+
+# LSD Test
+library(agricolae)
+an.m <- aov(sub_fullANI ~ 1)
+l <- LSD.test(an.m, "sub_full", p.adj = "bonferroni")
+l
+
+```
+
+```{r}
+# Bootstrap
+all<-sub_fullANI 
+boot<-sample(all,size=10000,replace = TRUE) #bootstrap
+d<-density(boot) #kernel density estimation
+library(ggplot2)
+library(dplyr)
+df<-data.frame(boot)
+
+# Kernel Density Estimation
+df<-data.frame(boot)
+df%>%
+  ggplot( aes(x=boot)) +
+  geom_density(fill="#69b3a2", color="#e9ecef", alpha=0.8)+
+  ggtitle("Density plot of ANI value for sub_full") + xlab("ANI values(bootstrapped)")
+  theme_ipsum()
+  
+```
+
+```{r}
+# read full-to-full ANI values
+fullfull <- readr::read_tsv("~/Downloads/full_full_ANI.txt", col_names = FALSE)
+fullfull_ANI <- data.frame(fullfull)
+fullfull_ANI <- fullfull_ANI[,3]
+
+# read sub-to-full ANI values
+subfull <- readr::read_tsv("~/Downloads/sub_full_ANI.txt", col_names = FALSE)
+subfull_ANI <- data.frame(subfull)
+subfull_ANI <- subfull_ANI[,3]
+
+# choose one sub-to-full ANI value to add as a line
+line_value <- fullfull_ANI[1]  
+
+# df for plotting
+df_subfull <- data.frame(ANI = subfull_ANI, Type = "Sub-to-Full")
+line <- data.frame(ANI = line_value, Type = "Full-to-Full")
+
+# filter out 100% ANIs
+df_combined <- rbind(df_subfull, line)
+df_combined <- df_combined[df_combined$ANI < 100, ]
+
+# create plot
+ggplot(df_combined, aes(x = ANI, fill = Type)) +
+  geom_density(fill="#69b3a2", color="#e9ecef") +
+  geom_vline(aes(xintercept = line_value), data = line, color = "red", size = 1) + 
+  labs(title = "Comparison of full-to-full and full-to-sub ANI Values",
+       x = "ANI Values (Bootstrapped)",
+       y = "Density",
+       fill = "Comparison Type") +
+  theme_minimal()
+```

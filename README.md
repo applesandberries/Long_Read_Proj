@@ -10,12 +10,6 @@ Currently, there is no definitive way to prove two strain are identical and no u
 
 ### Dependencies
 
-* Python + packages: 
-* R + packages: ggplot2, agricolae, dplyr
-* Conda
-* minimap2 - https://lh3.github.io/minimap2
-* miniasm - https://github.com/lh3/miniasm
-* fastANI - https://github.com/ParBLiSS/FastANI easiest install using dependency-free binary for Linux or OSx from FastANI v1.34 release
 
 ### Installing
 
@@ -37,3 +31,5 @@ Alexa Ligon<br>
 Hailey Bieneman<br>
 
 ## Acknowledgments
+
+Special thanks to Dr. Putonti and Dr. Banerjee for allowing us to work on this project, giving advice on the project, and providing valuable resources. 

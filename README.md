@@ -10,6 +10,22 @@ Currently, there is no definitive way to prove two strain are identical and no u
 
 ### Dependencies
 
+* Python + packages: 
+* R + packages: ggplot2, agricolae, dplyr
+* Conda
+* minimap2 - https://lh3.github.io/minimap2
+* miniasm - https://github.com/lh3/miniasm
+* fastANI - https://github.com/ParBLiSS/FastANI easiest install using dependency-free binary for Linux or OSx from FastANI v1.34 release
+
+=======
+* Python + packages: matplotlib
+* R + packages: ggplot, dplyr, agricolae, tidyverse, writex1, ggbreak, hrbrthemes, plotrix, RColorBrewer, empirical
+* Conda
+* minimap2 - https://lh3.github.io/minimap2
+* miniasm - https://github.com/lh3/miniasm
+* canu - https://github.com/marbl/canu
+* fastANI
+* Seqtk (please install via (conda install seqtk) rather than github or install through github but be sure to add seqtk to main path to be used as a command without providing path))
 
 ### Installing
 

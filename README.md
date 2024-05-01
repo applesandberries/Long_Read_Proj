@@ -25,15 +25,14 @@ git clone https://github.com/applesandberries/Long_Read_Proj.git
 ```
 ### Executing program
 
-say which file is the full pipeline <br>
-which file is the separate R file <br> 
-and which are the short test data <br>
 First download and unzip out two example files! SKIP THIS STEP IF YOU ALREADY HAVE FILES TO RUN THIS WITH.
 MAKE SURE TO PUT THESE FILES IN A FOLDER WITH ONLY THEMSELVES. I RECOMMEND CALLING IT fastaFiles
 ```
+mkdir fastaFiles
 curl -L ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR169/056/SRR16938656/SRR16938656_1.fastq.gz -o SRR16938656_Long-read_sequencing_of_E._coli_UMB1284_1.fastq.gz
 curl -L ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR169/058/SRR16938658/SRR16938658_1.fastq.gz -o SRR16938658_Long-read_sequencing_of_E._coli_UMB1180_1.fastq.gz
-
+gunzip SRR16938656_Long-read_sequencing_of_E._coli_UMB1284_1.fastq.gz
+gunzip SRR16938658_Long-read_sequencing_of_E._coli_UMB1180_1.fastq.gz
 ```
 Then cd into the github repo you just downloaded!
 ```

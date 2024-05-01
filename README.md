@@ -28,10 +28,29 @@ git clone https://github.com/applesandberries/Long_Read_Proj.git
 say which file is the full pipeline <br>
 which file is the separate R file <br> 
 and which are the short test data <br>
+First download and unzip out two example files! SKIP THIS STEP IF YOU ALREADY HAVE FILES TO RUN THIS WITH.
+MAKE SURE TO PUT THESE FILES IN A FOLDER WITH ONLY THEMSELVES. I RECOMMEND CALLING IT fastaFiles
 ```
-code blocks for commands if needed
-```
+curl -L ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR169/056/SRR16938656/SRR16938656_1.fastq.gz -o SRR16938656_Long-read_sequencing_of_E._coli_UMB1284_1.fastq.gz
+curl -L ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR169/058/SRR16938658/SRR16938658_1.fastq.gz -o SRR16938658_Long-read_sequencing_of_E._coli_UMB1180_1.fastq.gz
 
+```
+Then cd into the github repo you just downloaded!
+```
+cd Long_Read_Project
+```
+Now run the pipeline!
+The pipeline will from from the python6 file.
+It takes two arguments:
+-i path to fastq files
+-o path for ani output
+I recommend calling the ani output: output because I am lazy
+SYNTAX IS VERY IMPORTANT PLEASE ADD THE / AT THE END OF YOUR -i PATH, BUT NOT YOUR -o PATH
+Your graph output will be in the Long_Read_Project folder under Rplots.pdf
+Here is a sample of what the running the pipeline looks like:
+```
+python python6 -i /home/happleberry/Long_Read_Proj/fastqFiles/ -o /home/happleberry/Long_Read_Proj/Long_Read_Proj/output
+```
 ## Authors
 
 Helen Appleberry<br>

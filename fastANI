@@ -93,4 +93,3 @@ if __name__ == "__main__":
 
     # Concatenate FastANI results
     concatenate_fastani_results(args.output_dir)
-                                                                                                      95,28         Bot

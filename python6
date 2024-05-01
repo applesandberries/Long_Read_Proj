@@ -68,7 +68,7 @@ for i in list_of_fastq_prefixes:
 
 
 
-
+os.chdir(os.path.join(basic_path))
 
 
 for i in list_of_fastq_prefixes:

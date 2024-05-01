@@ -25,7 +25,7 @@ os.system(command)
 
 for i in list_of_fastq_prefixes:
     command= 'minimap2 -x ava-ont '+infile+i+'.fastq '+infile+i+'.fastq | gzip -1 > '+infile+i+'_minimap.paf.gz'
-    #os.system(command)
+    os.system(command)
     print(command)
 for i in list_of_fastq_prefixes:
     command= 'miniasm -f '+infile+i+'.fastq '+infile+i+'_minimap.paf.gz > '+infile+i+'_miniasm.gfa'
@@ -141,5 +141,12 @@ for i in range(len(list_of_fastq_prefixes) - 1):  # Iterate over the list up to 
     next_element = list_of_fastq_prefixes[i + 1]
     command = f'python {basic_path}/fastANI {basic_path}/sub/{current_element}/gfa {basic_path}/sub/{next_element}/gfa {basic_path}/output/different'
 
+    print(command)
+    os.system(command)
+os.chdir(os.path.join(basic_path))
+for i in range(len(list_of_fastq_prefixes) - 1):  # Iterate over the list up to the second-to-last element
+    current_element = list_of_fastq_prefixes[i]
+    next_element = list_of_fastq_prefixes[i + 1]
+    command=f'python {basic_path}/Python_for_Rcode.py {basic_path}/output/{current_element}/combined_fastani_results.txt {basic_path}/output/{next_element}/combined_fastani_results.txt {basic_path}/output/different/combined_fastani_results.txt'
     print(command)
     os.system(command)

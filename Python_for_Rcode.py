@@ -1,9 +1,10 @@
 import subprocess
 import os
 import argparse
+basic_path = os.getcwd()
 def generate_ani_comparison_plot(A_to_A, B_to_B, A_to_B):
     # Run R script as a subprocess
-    subprocess.run(["Rscript", f"{basic_path}/Pipeline_args.r", A_to_A, B_to_B, A_to_B])
+    subprocess.run(["Rscript", f"{basic_path}/Pipeline_args.R", A_to_A, B_to_B, A_to_B])
 
 def main():
     parser = argparse.ArgumentParser(description='Generate ANI comparison plot')
@@ -12,7 +13,7 @@ def main():
     parser.add_argument('A_to_B', type=str, help='Path to A_to_B matrix')
     args = parser.parse_args()
 
-    generate_ani_comparison_plot(A_to_A, B_to_B, A_to_B)
+    generate_ani_comparison_plot(args.A_to_A, args.B_to_B, args.A_to_B)
 
 
 if __name__ == "__main__":

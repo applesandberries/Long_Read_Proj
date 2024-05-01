@@ -39,7 +39,7 @@ Then cd into the github repo you just downloaded!
 cd Long_Read_Project
 ```
 Now run the pipeline!
-The pipeline will from from the python6 file.
+The pipeline will run from the python6 file. It requires several other files in github to run, and it makes the assumption they are in the same directory as the python6 file, so please don't move arround any of the files in the github.
 It takes two arguments:
 -i path to fastq files
 -o path for ani output

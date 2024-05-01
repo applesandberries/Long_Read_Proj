@@ -43,13 +43,13 @@ Now run the pipeline!
 The pipeline will run from the python6 file. It requires several other files in github to run, and it makes the assumption they are in the same directory as the python6 file, so please don't move arround any of the files in the github.
 It takes two arguments:
 -i path to fastq files
--o path for ani output
+-o name of your output file
 I recommend calling the ani output: output because I am lazy
-SYNTAX IS VERY IMPORTANT PLEASE ADD THE / AT THE END OF YOUR -i PATH, BUT NOT YOUR -o PATH
+SYNTAX IS VERY IMPORTANT PLEASE ADD THE / AT THE END OF YOUR -i PATH, DO NOT PUT FULL OUTPUT PATH, JUST WHAT YOU WANT TO NAME IT
 Your graph output will be in the Long_Read_Project folder under Rplots.pdf
 Here is a sample of what the running the pipeline looks like:
 ```
-python python6 -i /home/happleberry/Long_Read_Proj/fastqFiles/ -o /home/happleberry/Long_Read_Proj/Long_Read_Proj/output
+python python6 -i /home/happleberry/Long_Read_Proj/fastqFiles/ -o output
 ```
 ## Authors
 
